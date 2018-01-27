@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<div class="ddd">
+			吉林省地方记录删掉了
+		</div>
+		<script type="text/javascript">
+			$(".ddd").click(function() {
+				var src = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&text=' + $('.ddd')[0].innerText;
+
+				if($('.ddd').find(".jspeech_iframe").length > 0) {
+
+					$('.ddd').find(".jspeech_iframe").attr("src", src);
+
+				} else {
+
+					var iframe = "<iframe height='0' width='0' class='jspeech_iframe' scrolling='no' frameborder='0' src='" + src + "' ></iframe>";
+
+					$('.ddd').append(iframe);
+
+				}
+			})
+		</script>
+	</body>
+
+</html>
