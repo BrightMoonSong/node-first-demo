@@ -14,6 +14,11 @@ router.get('/addUser', function(req, res, next) {
 	userDao.add(req, res, next);
 });
 
+//getimg
+router.get('/getimg', function(req, res, next) {
+	userDao.getimg(req, res, next);
+});
+
 //登录
 router.post('/login', function(req, res, next) {
 	userDao.login(req, res, next);

@@ -1,0 +1,9 @@
+需要 npm install forever -g
+
+启动：forever start www
+
+停止：forever stop www  #关闭应用
+
+forever介绍：https://www.jianshu.com/p/669a618f3212
+
+为何用forever：node出错停止后他会重启node

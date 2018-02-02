@@ -4,13 +4,27 @@ body {
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin: 0;
+	padding: 0;
+}
+
 a {
 	color: #00B7FF;
 }
 
 ul li {
 	list-style: none;
-	display: inline;
+	/*display: inline;*/
+}
+
+.border-li li {
+	border: 1px solid #666;
+	padding: 20px;
 }
 
 li>span {
@@ -21,9 +35,11 @@ li>span {
 li>ul {
 	padding-left: 0;
 }
-table{
+
+table {
 	margin: 10px;
 }
+
 table td,
 th {
 	border: 1px solid #2E558E;

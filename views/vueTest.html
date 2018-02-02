@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>vue $set</title>
+		<!--<script src="https://static.jb51.net/assets/vue/1.0.11/vue.min.js"></script>-->
+		<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			姓名：{{ name }}<br> 年龄：{{age}}
+			<br> 性别：{{sex}}
+			<br> 说明：{{info.content}}
+		</div>
+		<!-- JavaScript 代码需要放在尾部（指定的HTML元素之后） -->
+		<script>
+			var data = {
+				name: "脚本之家",
+				age: '3',
+				info: {
+					content: 'my name is test'
+				}
+			}
+			var key = 'content';
+			var vm = new Vue({
+				el: '#app',
+				data: data,
+				ready: function() {
+					Vue.set(data, 'sex', '男');
+					this.$set('info.' + key, 'what is this?');
+				}
+			});
+			//			data.sex = '男'；
+		</script>
+	</body>
+
+</html>

@@ -13,19 +13,17 @@
 	</head>
 
 	<body ng-controller="myctr" ng-init="novelIf=false">
+		<button ng-click="getimg('https://zhydl.oss-cn-beijing.aliyuncs.com/dev/doctor/header/2018123163323390.jpg')">testtest</button>
 		<div id="audio"></div>
 		<ul>
 			<li>
 				<h2>添加小说名字</h2>
 			</li>
 			<li>
-				<input type="text" ng-model="novelName" placeholder="请输入小说名字" />
-			</li>
-			<li>
-				<button ng-click="nameSubmit()">提交</button>
+				<input type="text" ng-model="novelName" placeholder="请输入小说名字" /><button ng-click="nameSubmit()">提交</button>
 			</li>
 		</ul>
-		<ul>
+		<ul class="border-li">
 			<li>
 				<h2>小说列表</h2>
 			</li>
@@ -66,10 +64,18 @@
 						</td>
 					</tr>
 				</table>
-				pageSize:<input type="number" ng-model="$parent.pageSize"/>
-				pageNo:<input type="number" ng-model="$parent.pageNo"/>
 			</li>
 		</ul>
+		<div ng-show="lookTitle">
+			pageSize:
+			<button ng-click="changePage('pageSize-')">-</button>
+			<input type="number" ng-model="pageSize" style="width: 50px;"/>
+			<button ng-click="changePage('pageSize+')">+</button> pageNo:
+			<button ng-click="changePage('pageNo-')">-</button>
+			<input type="number" ng-model="pageNo"  style="width: 50px;"/>
+			<button ng-click="changePage('pageNo+')">+</button>
+			<button ng-click="search()">search</button>
+		</div>
 		<div ng-if="lookNovel" class="black"></div>
 		<div ng-if="lookNovel" class="lookNovel">
 			<!--<button ng-click="speakNovel()">speak</button>-->

@@ -6,6 +6,7 @@ var $sql = require('./userSqlMapping');
 var getUtf8 = require('./getUtf8');
 var getUtfTitle = require('./getUtfTitle');
 var request = require('request');
+var http = require('http');
 
 // 使用连接池，提升性能
 var pool = mysql.createPool($util.extend({}, $conf.mysql));
@@ -23,6 +24,34 @@ var jsonWrite = function(res, ret) {
 };
 
 module.exports = {
+	getimg: function(req, res, next) { //test
+		var param = req.query || req.params;
+		console.log('param.url');
+		console.log(param.url);
+		var fs = require("fs");
+
+		var imageBuf = fs.readFileSync(param.url);
+		var ss = imageBuf.toString("base64")
+		console.log('ss');
+		console.log(ss);
+		
+//		http.get(param.url, function(res) {　　
+//			var chunks = [];
+//			console.log('urlurl');
+//			var size = 0;
+//			res.on('data', function(chunk) {　　　　
+//				chunks.push(chunk);
+//				size += chunk.length;
+//			});　
+//			　　
+//			res.on('end', function(err) {				　　　　
+//				var data = Buffer.concat(chunks, size);　
+//				var base64Img = data.toString('base64');
+//				console.log(base64Img);
+//				jsonWrite(res, base64Img);				　　
+//			});
+//		});
+	},
 	getNovel: function(req, res, next) {
 		getUtf8.returnNovel('https://www.ybdu.com/xiaoshuo/14/14278/4305561.html', res);
 		//		request('https://www.ybdu.com/xiaoshuo/14/14278/4305561.html', function(error, response, body) {

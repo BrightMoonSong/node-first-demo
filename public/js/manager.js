@@ -14,52 +14,53 @@ function myctr($scope, novelService, $timeout) {
 	//看小说去了
 	$scope.dbLookNovel = function(o) {
 		$scope.lookNovel = o; //小说
-//		var a = 0,
-//			b = '';
-//		o.split('').forEach(function(val) {
-//			if(a < 20) {
-//				a = a + 1;
-//				b = b + val;
-//				if(a == 20) {
-//					$scope.conList.push(b);
-//				}
-//			} else {
-//				a = 1;
-//				b = '' + val;
-//			}
-//		})
+		//		var a = 0,
+		//			b = '';
+		//		o.split('').forEach(function(val) {
+		//			if(a < 20) {
+		//				a = a + 1;
+		//				b = b + val;
+		//				if(a == 20) {
+		//					$scope.conList.push(b);
+		//				}
+		//			} else {
+		//				a = 1;
+		//				b = '' + val;
+		//			}
+		//		})
 		//		console.log($scope.conList);
 	}
 	//念出来小说
-//	$scope.speakNovel = function() {
-//		$scope.test($scope.conList[0]);
-//		var n = 1;
-//		var a = $timeout(function() {
-//			$scope.test($scope.conList[n]);
-//			n++;
-//			if(n > $scope.conList.length) {
-//				$timeout.cancel(a);
-//			}
-//		}, 5000);
-//	}
-//	$scope.test = function(val) {
-//		//		var src = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text=' + $scope.lookNovel;
-//		var src = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + val;
-//
-//		if($('.lookNovel').find(".jspeech_iframe").length > 0) {
-//
-//			$('.lookNovel').find(".jspeech_iframe").attr("src", src);
-//
-//		} else {
-//
-//			var iframe = "<iframe height='0' width='0' class='jspeech_iframe' scrolling='no' frameborder='0' src='" + src + "' ></iframe>";
-//
-//			$('.lookNovel').append(iframe);
-//
-//		}
-//	}
+	//	$scope.speakNovel = function() {
+	//		$scope.test($scope.conList[0]);
+	//		var n = 1;
+	//		var a = $timeout(function() {
+	//			$scope.test($scope.conList[n]);
+	//			n++;
+	//			if(n > $scope.conList.length) {
+	//				$timeout.cancel(a);
+	//			}
+	//		}, 5000);
+	//	}
+	//	$scope.test = function(val) {
+	//		//		var src = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=2&text=' + $scope.lookNovel;
+	//		var src = 'http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=5&text=' + val;
+	//
+	//		if($('.lookNovel').find(".jspeech_iframe").length > 0) {
+	//
+	//			$('.lookNovel').find(".jspeech_iframe").attr("src", src);
+	//
+	//		} else {
+	//
+	//			var iframe = "<iframe height='0' width='0' class='jspeech_iframe' scrolling='no' frameborder='0' src='" + src + "' ></iframe>";
+	//
+	//			$('.lookNovel').append(iframe);
+	//
+	//		}
+	//	}
 	//查看小说章节
 	$scope.getList = function(id) {
+		$scope.dataId = id;
 		$scope.lookTitle = $scope.lookTitle ? false : true;
 		if($scope.lookTitle) {
 			novelService
@@ -71,6 +72,38 @@ function myctr($scope, novelService, $timeout) {
 				})
 		}
 	};
+
+	//pageSize   pageNo  ++--
+	$scope.changePage = function(val) {
+		switch(val) {
+			case 'pageSize-':
+				$scope.pageSize = $scope.pageSize - 1;
+				break;
+			case 'pageSize+':
+				$scope.pageSize = $scope.pageSize + 1;
+				break;
+			case 'pageNo-':
+				$scope.pageNo = $scope.pageNo - 1;
+				break;
+			case 'pageNo+':
+				$scope.pageNo = $scope.pageNo + 1;
+				break;
+			default:
+				break;
+		}
+	};
+
+	//搜索
+	$scope.search = function() {
+		novelService
+			.getContent($scope.dataId, $scope.pageSize, $scope.pageNo)
+			.then(function(result) {
+				$scope.titleList = result.data;
+			}, function(err) {
+				console.log(err);
+			})
+	};
+
 	//get名字
 	$scope.initName = function() {
 		novelService
@@ -129,10 +162,35 @@ function myctr($scope, novelService, $timeout) {
 			alert('请输入小说的目录的网址');
 		}
 	}
+	//getimg
+	$scope.getimg = function(url) {
+		novelService
+			.getimg(url)
+			.then(function(result) {
+				console.log(result)
+			}, function(err) {
+				console.log(err);
+			})
+	}
+	//	$scope.getimg('https://zhydl.oss-cn-beijing.aliyuncs.com/dev/doctor/header/2018123163323390.jpg');
 }
 
 function novelService($http, $q) {
 	return {
+		//getimg
+		getimg: function(url) {
+			var defer = $q.defer();
+			var url = '/users/getimg?url=' + url;
+			$http({
+				method: "get",
+				url: url
+			}).success(function(data) {
+				defer.resolve(data)
+			}).error(function(data) {
+				defer.reject(data)
+			})
+			return defer.promise;
+		},
 		//提取章节内容
 		chapterContent: function(id, url) {
 			var defer = $q.defer();
