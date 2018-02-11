@@ -6,6 +6,12 @@
 		<title>
 			<%= title %>
 		</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta name="screen-orientation" content="portrait" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-fullscreen" content="true">
 		<link href="/css/style.css" rel="stylesheet" type="text/css" />
 		<script src="/js/angular.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/manager.js" type="text/javascript" charset="utf-8"></script>
@@ -42,25 +48,26 @@
 				</ul>
 				<table ng-show="lookTitle" cellspacing="0" cellpadding="0" style="border-collapse: collapse;width: 100%;">
 					<tr>
-						<th>ID</th>
-						<th>bookID</th>
+						<!--<th>ID</th>
+						<th>bookID</th>-->
 						<th>章节目录</th>
-						<th>章节内容</th>
+						<!--<th>章节内容</th>
 						<th>章节来源</th>
 						<th>创建时间</th>
-						<th>更新时间</th>
+						<th>更新时间</th>-->
 						<th>操作</th>
 					</tr>
 					<tr ng-repeat="res in titleList">
-						<td><span>{{res.id}}</span></td>
-						<td><span>{{res.book_id}}</span></td>
+						<!--<td><span>{{res.id}}</span></td>
+						<td><span>{{res.book_id}}</span></td>-->
 						<td><span>{{res.title}}</span></td>
-						<td ng-dblclick="dbLookNovel(res.content)"><span title="{{res.content}}">{{res.content}}</span></td>
+						<!--<td ng-dblclick="dbLookNovel(res.content)"><span title="{{res.content}}">{{res.content}}</span></td>
 						<td><span>{{res.source}}</span></td>
 						<td><span>{{res.creat_time}}</span></td>
-						<td><span>{{res.update_time}}</span></td>
+						<td><span>{{res.update_time}}</span></td>-->
 						<td>
 							<button ng-hide="res.content" ng-click="chapterContent(res.id,res.source)">提取章节内容</button>
+							<button ng-show="res.content" ng-click="dbLookNovel(res.content)">看</button>
 						</td>
 					</tr>
 				</table>
@@ -69,21 +76,23 @@
 		<div ng-show="lookTitle">
 			pageSize:
 			<button ng-click="changePage('pageSize-')">-</button>
-			<input type="number" ng-model="pageSize" style="width: 50px;"/>
-			<button ng-click="changePage('pageSize+')">+</button> pageNo:
+			<input type="number" ng-model="pageSize" style="width: 50px;" />
+			<button ng-click="changePage('pageSize+')">+</button>
+			<br />pageNo:
 			<button ng-click="changePage('pageNo-')">-</button>
-			<input type="number" ng-model="pageNo"  style="width: 50px;"/>
+			<input type="number" ng-model="pageNo" style="width: 50px;" />
 			<button ng-click="changePage('pageNo+')">+</button>
 			<button ng-click="search()">search</button>
 		</div>
 		<div ng-if="lookNovel" class="black"></div>
-		<div ng-if="lookNovel" class="lookNovel">
+		<div ng-show="lookNovel" class="lookNovel">
 			<!--<button ng-click="speakNovel()">speak</button>-->
-			<button ng-click="$parent.lookNovel=''">关闭</button>
+			<button ng-click="lookNovel=''">关闭</button>
 			<br />
-			<span class="jcontent">{{$parent.lookNovel}}</span>
+			<span class="jcontent">{{lookNovel}}</span>
 			<br />
-			<button ng-click="$parent.lookNovel=''">关闭</button>
+			<button style="margin: 20px 45%;width: 50px;" ng-click="lookNovel=''">关闭</button>
+			<br />
 		</div>
 	</body>
 

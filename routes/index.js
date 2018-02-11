@@ -14,4 +14,9 @@ router.get('/manager', function(req, res, next) {
   res.render('manager', { title: '管理页面' });
 });
 
+/* 二维码 */
+router.get('/erwei', function(req, res, next) {
+  res.render('erwei', { title: '管理页面' });
+});
+
 module.exports = router;
